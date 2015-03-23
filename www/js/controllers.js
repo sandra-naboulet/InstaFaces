@@ -1,8 +1,10 @@
 angular.module('starter.controllers', [])
  
-.controller('FaceCtrl', function($scope, FaceService) {
+.controller('FaceCtrl', function($scope, FaceService, Face) {
  
+ var picUrl = "https://distilleryimage11-a.akamaihd.net/3769f372742411e18bb812313804a181_7.jpg";
   $scope.operation_id = "test";
+  $scope.yam = "yam";
  
   $scope.auth = function() {
   	$scope.operation_id = "clicked !";
@@ -10,4 +12,11 @@ angular.module('starter.controllers', [])
   		$scope.operation_id = res.operation_id;
   	});
   };
+
+  $scope.getFaceInfos = function() {
+  	FaceService.getFaceInfos(picUrl, function(yam){
+  		$scope.yam = yam;
+  	});
+  }
+
 });

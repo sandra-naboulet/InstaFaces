@@ -26,6 +26,30 @@ angular.module('starter.services', [])
         callback(res);
       });
     },
+
+
+    getFaceInfos : function(urls, callback){
+
+        if(navigator && navigator.connection && navigator.connection.type === 'none'){
+          $ionicPopup.alert({
+            title:'Connexion impossible',
+            template:'Vous n\'etes pas connecté a Internet' 
+          });
+          return;
+        }
+
+        var url = "http://api.skybiometry.com/fc/faces/detect?callback=JSON_CALLBACK&output=jsonp&api_key=" + api_key + "&api_secret=" + api_secret + "&urls="+ urls +"&attributes=all" ;
+
+      $http.jsonp(url)
+      .success(function(res){
+        $ionicLoading.hide();
+        var yaw = res.photos[0].tags[0].yaw;
+        callback(yaw);
+      });
+
+
+    }
+
   };
 })
 
