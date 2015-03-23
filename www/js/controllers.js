@@ -1,12 +1,12 @@
 angular.module('starter.controllers', [])
  
-.controller('PictureCtrl', function($scope, SkyBiometryService) {
+.controller('FaceCtrl', function($scope, FaceService) {
  
   $scope.operation_id = "test";
  
-  $scope.authenticate = function() {
+  $scope.auth = function() {
   	$scope.operation_id = "clicked !";
-  	SkyBiometryService.callApi(function(res){
+  	FaceService.callApi(function(res){
   		$scope.operation_id = res.operation_id;
   	});
   };

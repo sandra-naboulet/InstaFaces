@@ -1,6 +1,6 @@
 angular.module('starter.services', [])
 
-.factory("SkyBiometryService", function($http,$ionicLoading,$ionicPopup){
+.factory("FaceService", function($http,$ionicLoading,$ionicPopup){
 
   var api_key = "713dcdb3c93240209d478719decd28a8";
   var api_secret = "0e4d393bc0a848a5a54851f26367f05a";
@@ -8,7 +8,7 @@ angular.module('starter.services', [])
 
   return {
     callApi : function authenticate(callback){
-      
+
       if(navigator && navigator.connection && navigator.connection.type === 'none'){
         $ionicPopup.alert({
           title:'Connexion impossible',
