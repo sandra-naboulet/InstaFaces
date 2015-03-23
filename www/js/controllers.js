@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
  
-.controller('FaceCtrl', function($scope, FaceService, Face) {
+.controller('FaceCtrl', function($scope, FaceService) {
  
  var picUrl = "https://distilleryimage11-a.akamaihd.net/3769f372742411e18bb812313804a181_7.jpg";
   $scope.operation_id = "test";
