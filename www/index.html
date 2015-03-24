@@ -46,10 +46,11 @@
 
       <div ng-controller="InstaCtrl">
         <button class="button button-full button-positive" ng-click="getSelfies()">{{yolo}}</button>
-        Result : <span>{{img_url}}</span>
-        <img ng-show=" imgcontain == 1" ng-src="{{img_url}}" style="width:320px;height:320px;"/>
-      
-      </div>
+
+       Result : <span>{{img_url2[0].images.standard_resolution.url}}</span>
+        <img ng-show=" imgcontain == 1" ng-src="{{img_url2[0].images.standard_resolution.url}}" style="width:320px;height:320px;"/>
+        <a href="./game.html">Click me to begin the game</a>
+       </div>
       
        <div ng-controller="CameraCtrl">
         <button class="button button-full button-positive" ng-click="openCamera()">Take Selfie</button>

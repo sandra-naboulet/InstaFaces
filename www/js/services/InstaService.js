@@ -2,13 +2,13 @@ var app= angular.module('starter');
 
 app.factory("InstaService", function($http,$ionicLoading,$ionicPopup){ 
 
-  var clientid = "2e5abd064927444aa13fc2c5d27ef800";
+  var clientid = "c8e20f20055a4a76872b95dc5a15ff8b";
   var tag = "selfie";
-  var count = 1;
+  var count = 10;
   return{
 
     fetchSelfies: function(callback) {
-      var url = "https://api.instagram.com/v1/tags/"+tag+"/media/recent?client_id="+clientid+"&callback=JSON_CALLBACK";
+      var url = "https://api.instagram.com/v1/tags/"+tag+"/media/recent?client_id="+clientid+"&callback=JSON_CALLBACK&COUNT="+count+"";
 
 
       if(navigator && navigator.connection && navigator.connection.type === 'none'){
