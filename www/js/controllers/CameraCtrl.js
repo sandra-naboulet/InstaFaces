@@ -1,7 +1,7 @@
 var app= angular.module('starter');
 
 app.controller('CameraCtrl', function($scope, FaceService, InstaService) {
-  
+ document.addEventListener("deviceready", function () { 
 var picUrl = "https://distilleryimage11-a.akamaihd.net/3769f372742411e18bb812313804a181_7.jpg";
 $scope.picGlass = "--";
 
@@ -38,5 +38,5 @@ $scope.picGlass = "--";
   $scope.compare = function() {
   	
   }
-
+}, false);
 });
