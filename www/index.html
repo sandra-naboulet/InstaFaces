@@ -24,19 +24,22 @@
     <script src="js/services/FaceService.js"></script>
     <script src="js/controllers/InstaCtrl.js"></script>
     <script src="js/controllers/FaceCtrl.js"></script>
+     <script src="js/controllers/LoginCtrl.js"></script>
+    <script src="js/controllers/MenuCtrl.js"></script>
     <script src="js/controllers/CameraCtrl.js"></script>
+
   </head>
   <body ng-app="starter">
 
     <ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Insta'Faces</h1>
-      </ion-header-bar>
-      <ion-content >
+     
+      <ion-nav-view class="pane"></ion-nav-view>
 
-      <div ng-controller="FaceCtrl">
+      <!-- Some Api Tests ...
 
-        <button class="button button-full button-positive" ng-click="getFaceInfos()">Get Pic infos </button>
+       <div ng-controller="FaceCtrl">
+
+        <button class="button button-full button-positive" ng-click="getFaceInfosFromUrl()">Get Pic infos </button>
         Smiling : <span>{{smiling}}</span><br/>
         Glass : <span>{{glass}}</span><br/>
         Yaw : <span>{{yaw}}</span><br/>
@@ -55,9 +58,10 @@
        <div ng-controller="CameraCtrl">
         <button class="button button-full button-positive" ng-click="openCamera()">Take Selfie</button>
         Glass ?  <span>{{picGlass}}</span><br/>
-      </div
+      </div>
 
-      </ion-content>
+      -->
+
     </ion-pane>
   </body>
 </html>

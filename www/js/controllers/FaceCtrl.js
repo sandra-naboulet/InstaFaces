@@ -13,14 +13,24 @@ app.controller('FaceCtrl', function($scope, FaceService) {
   $scope.roll = "--";
   $scope.pitch = "--";
 
-  $scope.getFaceInfos = function() {
-  	FaceService.getFaceInfos(picUrl2, function(face){
+  $scope.getFaceInfosFromBinary = function() {
+  	FaceService.getFaceInfos(picUrl2, false, function(face){
   		$scope.yaw = face.yaw;
       $scope.smiling = face.smiling;
       $scope.glass = face.glass;
       $scope.roll = face.roll;
       $scope.pitch = face.pitch;
   	});
+  },
+
+  $scope.getFaceInfosFromUrl = function() {
+    FaceService.getFaceInfos(picUrl2, true, function(face){
+      $scope.yaw = face.yaw;
+      $scope.smiling = face.smiling;
+      $scope.glass = face.glass;
+      $scope.roll = face.roll;
+      $scope.pitch = face.pitch;
+    });
   }
 
 });

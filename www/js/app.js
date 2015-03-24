@@ -18,8 +18,25 @@ app.run(function($ionicPlatform) {
   });
 })
 
+
 app.config(function($stateProvider, $urlRouterProvider) {
 
+  $urlRouterProvider.otherwise('/')
 
+  $stateProvider
+  /*.state('login', {
+    url: '/',
+    templateUrl: '/partials/login.html',
+    controller: 'LoginCtrl'
+  })*/
+  .state('menu', {
+    url: '/',
+    templateUrl: '/partials/menu.html',
+    controller: 'MenuCtrl'
+  })
+  .state('game', {
+    url: '/game',
+    templateUrl: '/partials/game.html',
+     controller: 'InstaCtrl' // Rename to GameCtrl ?
+  })
 })
-

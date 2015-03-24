@@ -1,1 +1,27 @@
 /* Empty. Add your own CSS if you like */
+.pane {
+    background: url('../img/bg.png') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+.title {
+	color:white;
+	text-align: center;
+	height: 150px;
+	line-height: 90px;
+}
+
+.subtitle {
+	color:white;
+	text-align: center;
+	height: 80px;
+	line-height: 90px;
+}
+
+.slide-box {
+	text-align: center;
+	height: 320px;
+	line-height: 90px;
+}

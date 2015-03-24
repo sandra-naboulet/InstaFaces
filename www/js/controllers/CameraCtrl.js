@@ -1,9 +1,9 @@
 var app= angular.module('starter');
 
 app.controller('CameraCtrl', function($scope, FaceService, InstaService) {
- document.addEventListener("deviceready", function () { 
-var picUrl = "https://distilleryimage11-a.akamaihd.net/3769f372742411e18bb812313804a181_7.jpg";
-$scope.picGlass = "--";
+  
+  var picUrl = "https://distilleryimage11-a.akamaihd.net/3769f372742411e18bb812313804a181_7.jpg";
+  $scope.picGlass = "--";
 
 
   $scope.openCamera = function() {
@@ -22,7 +22,7 @@ $scope.picGlass = "--";
   navigator.camera.getPicture(
       function(imgData) {
          // $('.media-object', this.$el).attr('src', "data:image/jpeg;base64,"+imgData);
-         FaceService.getFaceInfos(picUrl, function(face){
+         FaceService.getFaceInfos(imgData, function(face){
             $scope.glass = face.glass;
             alert('Lunettes ? ' + face.glass,'infos');
          });
@@ -38,5 +38,5 @@ $scope.picGlass = "--";
   $scope.compare = function() {
   	
   }
-}, false);
+
 });
