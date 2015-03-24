@@ -1,32 +1,35 @@
 var app= angular.module('starter');
 
+var Face = function () {
+ 
+  
+  function Face() {
+    this.smiling;
+    this.glass;
+    this.pitch;
+    this.yaw;
+    this.roll;
+  }
+ 
+  /**
+   * Public method, assigned to prototype
+   */
+  Face.prototype.compareWith = function (anotherFace) {
+    return 42;
+  };
+
+  return Face;
+};
+
+
 app.factory("FaceService", function($http,$ionicLoading,$ionicPopup){
 
-  var api_key = "713dcdb3c93240209d478719decd28a8";
-  var api_secret = "0e4d393bc0a848a5a54851f26367f05a";
-  var operationId = "";
+  var base_url = "https://apius.faceplusplus.com/v2/";
+  var attributes = "glass,pose,gender,age,race,smiling";
+  var api_key = "4536f3ae77864fe5fe37179e2b9d2003";
+  var api_secret = "s5e6ldgUG5QTwz_juemVaSsKiRDDw0hd";
 
   return {
-    callApi : function authenticate(callback){
-
-      if(navigator && navigator.connection && navigator.connection.type === 'none'){
-        $ionicPopup.alert({
-          title:'Connexion impossible',
-          template:'Vous n\'etes pas connecté a Internet' 
-        });
-        return;
-      }
-
-      var url = "http://api.skybiometry.com/fc/account/authenticate?callback=JSON_CALLBACK&output=jsonp&api_key=" + api_key + "&api_secret=" + api_secret;
-
-      $http.jsonp(url)
-      .success(function(res){
-        $ionicLoading.hide();
-        operationId = res.operation_id;
-        callback(res);
-      });
-    },
-
 
     getFaceInfos : function(urls, callback){
 
@@ -37,14 +40,23 @@ app.factory("FaceService", function($http,$ionicLoading,$ionicPopup){
         });
         return;
       }
+  
+      var url = base_url + "detection/detect?callback=JSON_CALLBACK&output=jsonp&url=" + urls + "&api_secret=" + api_secret + "&api_key=" + api_key + "&attribute=" + attributes;
+    
+      $http.jsonp(url).success(function(res){
 
-      var url = "http://api.skybiometry.com/fc/faces/detect?callback=JSON_CALLBACK&output=jsonp&api_key=" + api_key + "&api_secret=" + api_secret + "&urls="+ urls +"&attributes=all" ;
-
-      $http.jsonp(url)
-      .success(function(res){
         $ionicLoading.hide();
-        var yaw = res.photos[0].tags[0].yaw;
-        callback(yaw);
+
+        var attr = res.face[0].attribute;
+
+        var face = new Face();
+        face.smiling = attr.smiling.value;
+        face.glass = attr.glass.value;
+        face.yaw = attr.pose.yaw_angle.value;
+        face.roll = attr.pose.roll_angle.value;
+        face.pitch = attr.pose.pitch_angle.value;
+        
+        callback(face);
       });
 
 

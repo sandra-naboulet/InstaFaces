@@ -1,21 +1,25 @@
 var app= angular.module('starter');
 
 app.controller('FaceCtrl', function($scope, FaceService) {
- 
+ // smile + glass
  var picUrl = "https://distilleryimage11-a.akamaihd.net/3769f372742411e18bb812313804a181_7.jpg";
+ // smile 
+ var picUrl2 = "https://distilleryimage10-a.akamaihd.net/910a3f1a8ba111e1a9f71231382044a1_7.jpg";
+
   $scope.operation_id = "test";
-  $scope.yam = "yam";
- 
-  $scope.auth = function() {
-  	$scope.operation_id = "clicked !";
-  	FaceService.callApi(function(res){
-  		$scope.operation_id = res.operation_id;
-  	});
-  };
+  $scope.smiling = "--";
+  $scope.glass = "--";
+  $scope.yaw = "--";
+  $scope.roll = "--";
+  $scope.pitch = "--";
 
   $scope.getFaceInfos = function() {
-  	FaceService.getFaceInfos(picUrl, function(yam){
-  		$scope.yam = yam;
+  	FaceService.getFaceInfos(picUrl2, function(face){
+  		$scope.yaw = face.yaw;
+      $scope.smiling = face.smiling;
+      $scope.glass = face.glass;
+      $scope.roll = face.roll;
+      $scope.pitch = face.pitch;
   	});
   }
 
