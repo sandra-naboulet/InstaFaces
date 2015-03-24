@@ -21,14 +21,16 @@ app.controller('CameraCtrl', function($scope, FaceService, InstaService) {
 
   navigator.camera.getPicture(
       function(imgData) {
+        console.log('imgData = ' + imgData);
          // $('.media-object', this.$el).attr('src', "data:image/jpeg;base64,"+imgData);
-         FaceService.getFaceInfos(imgData, function(face){
+         FaceService.getFaceInfos(imgData, false, function(face){
             $scope.glass = face.glass;
             alert('Lunettes ? ' + face.glass,'infos');
          });
       },
       function() {
           alert('Error taking picture', 'Error');
+          console.log('error get pic');
       },
       options);
 
