@@ -31,7 +31,7 @@ app.factory("FaceService", function($http,$ionicLoading,$ionicPopup){
 
   return {
 
-    getFaceInfos : function(urls, callback){
+    getFaceInfos : function(picture, callback){
 
       if(navigator && navigator.connection && navigator.connection.type === 'none'){
         $ionicPopup.alert({
@@ -41,7 +41,7 @@ app.factory("FaceService", function($http,$ionicLoading,$ionicPopup){
         return;
       }
   
-      var url = base_url + "detection/detect?callback=JSON_CALLBACK&output=jsonp&url=" + urls + "&api_secret=" + api_secret + "&api_key=" + api_key + "&attribute=" + attributes;
+      var url = base_url + "detection/detect?callback=JSON_CALLBACK&output=jsonp&url=" + picture + "&api_secret=" + api_secret + "&api_key=" + api_key + "&attribute=" + attributes;
     
       $http.jsonp(url).success(function(res){
 

@@ -24,6 +24,7 @@
     <script src="js/services/FaceService.js"></script>
     <script src="js/controllers/InstaCtrl.js"></script>
     <script src="js/controllers/FaceCtrl.js"></script>
+    <script src="js/controllers/CameraCtrl.js"></script>
   </head>
   <body ng-app="starter">
 
@@ -41,12 +42,19 @@
         Yaw : <span>{{yaw}}</span><br/>
         Roll : <span>{{roll}}</span><br/>
         Pitch : <span>{{pitch}}</span><br/>
-       </div>
-       <div ng-controller="InstaCtrl">
+      </div>
+
+      <div ng-controller="InstaCtrl">
         <button class="button button-full button-positive" ng-click="getSelfies()">{{yolo}}</button>
         Result : <span>{{img_url}}</span>
         <img ng-show=" imgcontain == 1" ng-src="{{img_url}}" style="width:320px;height:320px;"/>
-       </div>
+      
+      </div>
+      
+       <div ng-controller="CameraCtrl">
+        <button class="button button-full button-positive" ng-click="openCamera()">Take Selfie</button>
+        Glass ?  <span>{{picGlass}}</span><br/>
+      </div
 
       </ion-content>
     </ion-pane>
