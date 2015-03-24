@@ -26,27 +26,22 @@
     <script src="js/controllers/FaceCtrl.js"></script>
   </head>
   <body ng-app="starter">
-
+    <script></script>
     <ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Insta'Faces</h1>
-      </ion-header-bar>
-      <ion-content >
-
-      <div ng-controller="FaceCtrl">
-         <button class="button button-full button-positive" ng-click="auth()">Authenticate</button>
-         Result : <span>{{operation_id}}</span>
-
-          <button class="button button-full button-positive" ng-click="getFaceInfos()">Get Yam value</button>
-         Result : <span>{{yam}}</span>
-       </div>
-       <div ng-controller="InstaCtrl">
-        <button class="button button-full button-positive" ng-click="getSelfies()">{{yolo}}</button>
-        Result : <span>{{img_url2[0].images.standard_resolution.url}}</span>
-        <img ng-show=" imgcontain == 1" ng-src="{{img_url2[0].images.standard_resolution.url}}" style="width:320px;height:320px;"/>
-        <a href="./game.html">Click me to begin the game</a>
-       </div>
-
+      <ion-content>
+        <section ng-controller="InstaCtrl" data-ng-init="init()">
+          <h1>Let the game start</h1>
+          <!-- <ion-slide-box on-slide-changed="slideHasChanged($index)" active-slide="myActiveSlide">
+          <ion-slide ng-repeat="selfie in result">
+            <img ng-src="{{selfie.images.standard_resolution.url}}"  style="width:320px;height:320px;"/>
+          </ion-slide>
+          </ion-slide-box>-->
+          <ion-slide-box on-slide-changed="onSlideChanged(index)">
+          <ion-slide ng-repeat="selfie in result">
+            <img ng-src="{{selfie.images.standard_resolution.url}}"  style="width:320px;height:320px;"/>
+          </ion-slide>
+          </ion-slide-box>
+        </section>        
       </ion-content>
     </ion-pane>
   </body>
