@@ -38,6 +38,11 @@
           <button class="button button-full button-positive" ng-click="getFaceInfos()">Get Yam value</button>
          Result : <span>{{yam}}</span>
        </div>
+       <div ng-controller="InstaCtrl">
+        <button class="button button-full button-positive" ng-click="getSelfies()">{{yolo}}</button>
+        Result : <span>{{img_url}}</span>
+        <img ng-show=" imgcontain == 1" ng-src="{{img_url}}" style="width:320px;height:320px;"/>
+       </div>
 
       </ion-content>
     </ion-pane>
