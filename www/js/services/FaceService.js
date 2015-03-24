@@ -31,7 +31,7 @@ app.factory("FaceService", function($http,$ionicLoading,$ionicPopup){
 
   return {
 
-    getFaceInfos : function(picture, callback){
+    getFaceInfos : function(picture, isUrl, callback){
 
       if(navigator && navigator.connection && navigator.connection.type === 'none'){
         $ionicPopup.alert({
@@ -40,8 +40,16 @@ app.factory("FaceService", function($http,$ionicLoading,$ionicPopup){
         });
         return;
       }
+
+      var picAttr = "";
+      if(isUrl){
+        picAttr = "url";
+      }
+      else{
+        picAttr = "img[POST]";
+      }
   
-      var url = base_url + "detection/detect?callback=JSON_CALLBACK&output=jsonp&url=" + picture + "&api_secret=" + api_secret + "&api_key=" + api_key + "&attribute=" + attributes;
+      var url = base_url + "detection/detect?callback=JSON_CALLBACK&output=jsonp&" + picAttr + "=" + picture + "&api_secret=" + api_secret + "&api_key=" + api_key + "&attribute=" + attributes;
     
       $http.jsonp(url).success(function(res){
 
@@ -57,10 +65,9 @@ app.factory("FaceService", function($http,$ionicLoading,$ionicPopup){
         face.pitch = attr.pose.pitch_angle.value;
         
         callback(face);
+      }).error(function(){
+        console.log('Cant send the picture');
       });
-
-
     }
-
   };
 });
