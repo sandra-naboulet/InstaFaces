@@ -1,17 +1,19 @@
 <ion-pane>
   <ion-content>
     <section ng-controller="InstaCtrl" data-ng-init="init()">
-      <h1>Let the game start</h1>
+      <h3 class="subtitle">Let the game start</h3>
       <!-- <ion-slide-box on-slide-changed="slideHasChanged($index)" active-slide="myActiveSlide">
       <ion-slide ng-repeat="selfie in result">
         <img ng-src="{{selfie.images.standard_resolution.url}}"  style="width:320px;height:320px;"/>
       </ion-slide>
       </ion-slide-box>-->
-      <ion-slide-box on-slide-changed="onSlideChanged(index)">
-      <ion-slide ng-repeat="selfie in result">
-        <img ng-src="{{selfie.images.standard_resolution.url}}"  style="width:320px;height:320px;"/>
-      </ion-slide>
-      </ion-slide-box>
+      <div class="slide-box">
+        <ion-slide-box on-slide-changed="onSlideChanged(index)">
+          <ion-slide ng-repeat="selfie in result">
+            <img ng-src="{{selfie.images.standard_resolution.url}}"  style="width:320px;height:320px;"/>
+          </ion-slide>
+        </ion-slide-box>
+      </div>
     </section>        
   </ion-content>
   </ion-pane>
