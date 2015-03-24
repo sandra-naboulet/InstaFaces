@@ -34,11 +34,13 @@
       <ion-content >
 
       <div ng-controller="FaceCtrl">
-         <button class="button button-full button-positive" ng-click="auth()">Authenticate</button>
-         Result : <span>{{operation_id}}</span>
 
-          <button class="button button-full button-positive" ng-click="getFaceInfos()">Get Yam value</button>
-         Result : <span>{{yam}}</span>
+        <button class="button button-full button-positive" ng-click="getFaceInfos()">Get Pic infos </button>
+        Smiling : <span>{{smiling}}</span><br/>
+        Glass : <span>{{glass}}</span><br/>
+        Yaw : <span>{{yaw}}</span><br/>
+        Roll : <span>{{roll}}</span><br/>
+        Pitch : <span>{{pitch}}</span><br/>
        </div>
        <div ng-controller="InstaCtrl">
         <button class="button button-full button-positive" ng-click="getSelfies()">{{yolo}}</button>
