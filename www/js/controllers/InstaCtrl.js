@@ -26,36 +26,47 @@ app.controller('InstaCtrl', function($scope, InstaService, FaceService, $interva
     });
   };
 
+
   $scope.openCamera = function() {
-
   
-  if (!navigator.camera) {
-      alert("Camera API not supported", "Error");
-      return;
-  }
-  var options =   {   quality: 50,
-                      destinationType: Camera.DestinationType.DATA_URL, // FILE_URI or DATA_URL
-                      sourceType: Camera.PictureSourceType.CAMERA, // 0:Photo Library, 1=Camera, 2=Saved Album
-                      cameraDirection: 1,
-                      encodingType: 0     // 0=JPG 1=PNG
-                  };
+    if (!navigator.camera) {
+        alert("Camera API not supported", "Error");
+        return;
+    }
 
-  navigator.camera.getPicture(
-      function(imgData) {
-        console.log("Get picture : " + imgData)
-         // $('.media-object', this.$el).attr('src', "data:image/jpeg;base64,"+imgData);
-         FaceService.getFaceInfos(imgData, function(face){
-  
-            alert('success ' + face.glass,'infos');
-         });
-      },
-      function() {
-          alert('Error taking picture', 'Error');
-      },
-      options);
+    var options =   
+      {   quality: 50,
+          destinationType: Camera.DestinationType.DATA_URL, // FILE_URI or DATA_URL
+          sourceType: Camera.PictureSourceType.CAMERA, // 0:Photo Library, 1=Camera, 2=Saved Album
+          cameraDirection: 1,
+          encodingType: 0     // 0=JPG 1=PNG
+      };
 
-  return false;
-};
+      navigator.camera.getPicture(
+
+          function(imgData) {
+
+            // Get image URL
+             FaceService.getImgurUrl(imgData, function(res){
+               
+                var imgUrl = res.data.link;
+
+                console.log('In InstaCtrl : url = ' + imgUrl);
+
+                // Get Face infos
+                FaceService.getFaceInfos(imgUrl, function(face){
+                  console.log(face.asString());
+                });
+
+             });
+          },
+          function() {
+             console.log('In InstaCtrl : error ');
+          },
+        options);
+
+      return false;
+  };
   
 
 });
