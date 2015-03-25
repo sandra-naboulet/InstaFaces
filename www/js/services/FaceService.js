@@ -18,8 +18,9 @@ var Face = function () {
     return 42;
   };
 
-  Face.prototype.asString = function () {
-    return 'Face = { smiling : ' + this.smiling + ' glass :' + this.glass + ' pitch :' + this.pitch + ' yaw : ' + this.yaw + ' roll : '+ this.roll + '}';
+  Face.prototype.toString = function faceToString() {
+    var str = 'Face = { smiling : ' + this.smiling + ' glass :' + this.glass + ' pitch :' + this.pitch + ' yaw : ' + this.yaw + ' roll : '+ this.roll + '}';
+    return str;
   };
 
   return Face;

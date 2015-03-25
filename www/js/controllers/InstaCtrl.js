@@ -55,7 +55,7 @@ app.controller('InstaCtrl', function($scope, InstaService, FaceService, $interva
 
                 // Get Face infos
                 FaceService.getFaceInfos(imgUrl, function(face){
-                  console.log(face.asString());
+                  console.log('glass ? ' + face.glass);
                 });
 
              });
