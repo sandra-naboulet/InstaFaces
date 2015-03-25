@@ -19,6 +19,7 @@
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
+    <script src="vendors/angular-route.js"></script>
     <script src="js/app.js"></script>
     <script src="js/services/InstaService.js"></script>
     <script src="js/services/FaceService.js"></script>
@@ -31,7 +32,7 @@
   </head>
   <body ng-app="starter">
 
-    <ion-pane>
+    <ion-pane ng-view>
      
       <ion-nav-view class="pane"></ion-nav-view>
 

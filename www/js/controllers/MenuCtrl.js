@@ -6,7 +6,7 @@ app.controller('MenuCtrl', function($scope, $location) {
 
 	$scope.goToSoloGame = function(){
 		console.log('solo');
-		$location.path("/game");
+		//$location.path("#/game");
 	},
 
 	$scope.goToDuoGame = function(){
