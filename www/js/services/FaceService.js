@@ -3,6 +3,8 @@ var app= angular.module('starter');
 var API_KEY = "4536f3ae77864fe5fe37179e2b9d2003";
 var API_SECRET = "s5e6ldgUG5QTwz_juemVaSsKiRDDw0hd";
 var API_URL = "https://apius.faceplusplus.com/v2/";
+var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+ var picUrl = "https://distilleryimage11-a.akamaihd.net/3769f372742411e18bb812313804a181_7.jpg";
 
 var Face = function () {
  
@@ -99,6 +101,7 @@ function faceppDetect(options) {
                         options.success(JSON.parse(xhr.responseText));
                     } else {
                         options.error();
+                        console.log("RESPONSE : " + xhr.response);
                     }
                 }
             };
@@ -107,10 +110,17 @@ function faceppDetect(options) {
                 xhr.open('GET', API_URL + 'detection/detect?api_key=' + API_KEY + '&api_secret=' + API_SECRET + '&url=' + encodeURIComponent(options.img), true);
                 xhr.send();
             } else if (options.type === 'dataURI') {
-                xhr.open('POST', API_URL + 'detection/detect?api_key=' + API_KEY + '&api_secret=' + API_SECRET, true);
+                
+                xhr.open('POST', API_URL + 'detection/detect?api_key=' + API_KEY + '&api_secret=' + API_SECRET , true);
+                xhr.setRequestHeader("Content-Type", "multipart/form-data");
                 var fd = new FormData();
-                fd.append('img', dataURItoBlob(options.img));
+
+                fd.append('img', b64toBlob(options.img));
+                // fd.append('img', dataURItoBlob(options.img));
+                //fd.append('img', decode(options.img));
+
                 xhr.send(fd);
+               
             } else {
                 options.error();
             }
@@ -134,19 +144,116 @@ function faceppDetect(options) {
         }*/
     };
 
+// DECODE SOLUTION 1
+
+    function b64toBlob(b64Data) {
+  
+      var sliceSize = 512;
+
+      var byteCharacters = atob(b64Data);
+      var byteArrays = [];
+
+      for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+          var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+          var byteNumbers = new Array(slice.length);
+          for (var i = 0; i < slice.length; i++) {
+              byteNumbers[i] = slice.charCodeAt(i);
+          }
+
+          var byteArray = new Uint8Array(byteNumbers);
+
+          byteArrays.push(byteArray);
+      }
+
+     // var blob = new Blob(byteArrays, { type: 'image/jpeg' });
+      return byteArrays;
+  };
+
+// DECODE SOLUTION 2
+
    function dataURItoBlob(dataURI) {
   
-        var binary = atob(dataURI.split(',')[1]);
+        var binary = atob(dataURI);
   
         var array = [];
         for(var i = 0; i < binary.length; i++) {
             array.push(binary.charCodeAt(i));
         }
 
-        return URL.createObjectURL(new Blob([new Uint8Array(array)] , { type: 'image/jpeg' }));
-        //return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
+        return new Blob([new Uint8Array(array)] , { type: 'image/jpeg' });
+  
+    };
+
+
+// DECODE SOLUTION 3
+
+    function decode(input) {
+      var output = "";
+      var chr1, chr2, chr3;
+      var enc1, enc2, enc3, enc4;
+      var i = 0;
+
+      input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+      while (i < input.length) {
+
+          enc1 = keyStr.indexOf(input.charAt(i++));
+          enc2 = keyStr.indexOf(input.charAt(i++));
+          enc3 = keyStr.indexOf(input.charAt(i++));
+          enc4 = keyStr.indexOf(input.charAt(i++));
+
+          chr1 = (enc1 << 2) | (enc2 >> 4);
+          chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+          chr3 = ((enc3 & 3) << 6) | enc4;
+
+          output = output + String.fromCharCode(chr1);
+
+          if (enc3 != 64) {
+              output = output + String.fromCharCode(chr2);
+          }
+          if (enc4 != 64) {
+              output = output + String.fromCharCode(chr3);
+          }
+
+      }
+
+      output = utf8_decode(output);
+
+      return output;
+
+  };
+
+
+  function utf8_decode(utftext) {
+    var string = "";
+    var i = 0;
+    var c = c1 = c2 = 0;
+
+    while ( i < utftext.length ) {
+
+        c = utftext.charCodeAt(i);
+
+        if (c < 128) {
+            string += String.fromCharCode(c);
+            i++;
+        }
+        else if((c > 191) && (c < 224)) {
+            c2 = utftext.charCodeAt(i+1);
+            string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+            i += 2;
+        }
+        else {
+            c2 = utftext.charCodeAt(i+1);
+            c3 = utftext.charCodeAt(i+2);
+            string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+            i += 3;
+        }
+
     }
 
+    return string;
+  };
 
 
 
