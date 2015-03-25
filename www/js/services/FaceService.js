@@ -80,7 +80,6 @@ app.factory("FaceService", function($http,$ionicLoading,$ionicPopup){
         }
         else {
           var attr = res.face[0].attribute;
-
           var face = new Face();
           face.smiling = attr.smiling.value;
           face.glass = attr.glass.value;

@@ -51,7 +51,7 @@ app.controller('InstaCtrl', function($scope, InstaService, FaceService, $interva
                
                 var imgUrl = res.data.link;
 
-                console.log('In InstaCtrl : url = ' + imgUrl);
+                alert('In InstaCtrl : url = ' + imgUrl);
 
                 // Get Face infos
                 FaceService.getFaceInfos(imgUrl, function(face){
