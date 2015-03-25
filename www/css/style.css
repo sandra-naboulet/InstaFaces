@@ -1,6 +1,6 @@
 /* Empty. Add your own CSS if you like */
 .pane {
-    background: url('../img/bg.png') no-repeat center center fixed; 
+    background-color : rgba(17, 32, 56, 0.53); 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -22,9 +22,15 @@
 
 .slide-box {
 	text-align: center;
-	height: 320px;
-	line-height: 90px;
+	padding :15px;
+	background-color: white;
 }
+
+.slide-box span {
+	color : #112038;
+	font-weight : bold;
+}
+
 /* -------- Menu -------- */
 #menu{
 	position: relative;
