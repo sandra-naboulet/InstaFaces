@@ -70,7 +70,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
   .state('menu', {
     url: '/',
     templateUrl: 'partials/menu.html',
-    controller: 'MenuCtrl'
   })
   .state('game', {
     url: '/game',
