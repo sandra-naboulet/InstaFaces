@@ -1,7 +1,7 @@
 <ion-pane>
   <ion-content>
     <section ng-controller="InstaCtrl" data-ng-init="init()">
-      <h3 class="subtitle">Let the game start</h3>
+     
       <!-- <ion-slide-box on-slide-changed="slideHasChanged($index)" active-slide="myActiveSlide">
       <ion-slide ng-repeat="selfie in result">
         <img ng-src="{{selfie.images.standard_resolution.url}}"  style="width:320px;height:320px;"/>
@@ -10,17 +10,35 @@
       <div class="slide-box">
         <ion-slide-box on-slide-changed="onSlideChanged(index)">
           <ion-slide ng-repeat="selfie in result">
-            <img ng-src="{{selfie.images.standard_resolution.url}}"  style="width:320px;height:320px;"/>
+            <img ng-src="{{selfie.images.standard_resolution.url}}"  style="width:100%;margin-bottom:15px"/>
+            <span>
+              #selfie hello blablab blaba ) :-*
+            </span>
           </ion-slide>
         </ion-slide-box>
 
-        <div class="padding">
-        <button class="button button-full button-positive" ng-click="openCamera()">
-          Take Selfie
-        </button>
+      
+       
       </div>
+      
+       <div class="row padding" >
+
+          <div class="col col-50">
+              <button class="button button-full" ng-click="">
+                Skip
+              </button>
+          </div>
+
+          <div class="col col-50">
+              <button class="button icon-left ion-camera button-full button-positive" ng-click="openCamera()">
+                Take Selfie
+              </button>
+          </div>
+
       </div>
 
+        
+     
 
     </section>        
   </ion-content>
