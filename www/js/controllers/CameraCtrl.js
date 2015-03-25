@@ -14,14 +14,14 @@ app.controller('CameraCtrl', function($scope, FaceService, InstaService) {
       return;
   }
   var options =   {   quality: 50,
-                      destinationType: Camera.DestinationType.DATA_URL,
+                      destinationType: Camera.DestinationType.FILE_URI,
                       sourceType: Camera.PictureSourceType.CAMERA, // 0:Photo Library, 1=Camera, 2=Saved Album
                       encodingType: 0     // 0=JPG 1=PNG
                   };
 
   navigator.camera.getPicture(
       function(imgData) {
-        console.log('imgData = ' + imgData);
+        console.log("Get picture : " + imgData)
          // $('.media-object', this.$el).attr('src', "data:image/jpeg;base64,"+imgData);
          FaceService.getFaceInfos(imgData, false, function(face){
             $scope.glass = face.glass;
