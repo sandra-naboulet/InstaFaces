@@ -40,6 +40,12 @@ app.controller('GameCtrl', function($scope, InstaService, FaceService, $interval
         		theImage.style.display = 'block';
         		theImage.src = "data:image/jpeg;base64," + imgData;
             console.log(theImage.src);
+            // Put image in canvas
+            var canvas = document.getElementById('insta');
+            var ctx = canvas.getContext('2d');
+            var sendselfie = new Image();
+            sendselfie.src = theImage.src; 
+            ctx.drawImage(sendselfie, 0, 0);
 
             // Get image URL
             FaceService.getImgurUrl(imgData, function(res){

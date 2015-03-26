@@ -1,13 +1,13 @@
 <script src="js/vanilla.js"></script>
+
 <ion-pane>
   <ion-content>
 	  <section ng-controller="GameCtrl" data-ng-init="init()">
 		  <p> Page résultats</p>
-		  <img style="display:block; width:100%;" id="ImageCapture" src="https://pbs.twimg.com/profile_images/441494854103605248/ZdQjenmf.png" onclick="app.share()"/>
-		  <p onclick="app.yolo()">Click pic to share on instagram</p>
+		  <canvas id="insta" width="300" height="300" onclick="app2.share();"></canvas>
+		  <img style="display:none; width:100%;" id="ImageCapture" src="" onclick="app2.share();"/>
+		  <p onclick="app2.yolo();">Click pic to share on instagram</p>
+		  <p onclick="app2.verify();">IS INSTAGRAM HERE?</p>
 	  </section>
   </ion-content>
 </ion-pane>
-<script>
-	app.initialize();
-</script>
