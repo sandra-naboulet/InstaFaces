@@ -1,9 +1,9 @@
 <script src="js/vanilla.js"></script>
 <ion-pane>
   <ion-content>
-	  <section ng-controller="GameCtrl" data-ng-init="init()">
+	  <section data-ng-init="init()">
 		  <p> Page résultats</p>
-		  <img style="display:block; width:100%;" id="ImageCapture" src="https://pbs.twimg.com/profile_images/441494854103605248/ZdQjenmf.png" onclick="app.share()"/>
+		  <img style="display:block; width:100%;" id="ImageCapture" onclick="app.share()" rotate/>
 		  <p onclick="app.yolo()">Click pic to share on instagram</p>
 	  </section>
   </ion-content>

@@ -1,67 +1,59 @@
 var app= angular.module('starter');
 
-app.controller('GameCtrl', function($scope, InstaService, FaceService, $interval, $ionicSlideBoxDelegate){
+app.controller('GameCtrl', function($scope, $ionicLoading, InstaService, FaceService, $interval, $ionicSlideBoxDelegate, $stateParams){
 
-	$scope.init = function () {
-		alert('THIS IS BEFORE CAMERA');
-		$scope.openCamera();
-	};
-/*
-  $scope.shareSelfie = function (){
-    var insta = document.getElementById('ImageCapture');
-    var caption = "Hey @antonin_rvr, you've been selfimitated!!! "
-    $cordovaInstagram.share(insta, caption).then(function() {
-      console.log('GameCtrl, share on onstagram worked');
-  }, function(err) {
-      console.log('No share on instagram');
-  });
-  };*/
+// $scope.tag = $routeParams.tag;
 
+ $scope.imgcontain = 0;
+  $scope.result = [];
+  $scope.yolo = "Search Instagram Selfies";
+  $scope.selfies = [];
+  
 
-	$scope.openCamera = function() {
+  // Fix ionic slider with ng-repeat
+ setTimeout(function(){
+      $ionicSlideBoxDelegate.update();
+      console.log('setTimeout');
+  },1000);
 
-		if (!navigator.camera) {
-			alert("Camera API not supported", "Error");
-			return;
-		}
-
-		var options =   
-		{   quality: 50,
-          destinationType: Camera.DestinationType.DATA_URL, // FILE_URI or DATA_URL
-          sourceType: Camera.PictureSourceType.CAMERA, // 0:Photo Library, 1=Camera, 2=Saved Album
-          cameraDirection: 1,
-          encodingType: 0     // 0=JPG 1=PNG
-      };
-
-      navigator.camera.getPicture(
-      	  //Succes
-      	  function(imgData) {
-        	  var theImage = document.getElementById('ImageCapture');
-        		theImage.style.display = 'block';
-        		theImage.src = "data:image/jpeg;base64," + imgData;
-            console.log(theImage.src);
-
-            // Get image URL
-            FaceService.getImgurUrl(imgData, function(res){
-
-            	var imgUrl = res.data.link;
-
-            	alert('In GameCtrl : url = ' + imgUrl);
-
-                // Get Face infos
-                FaceService.getFaceInfos(imgUrl, function(face){
-                	console.log('glass ? ' + face.glass);
-                });
-
-            });
-        },
-          //Error
-          function() {
-          	console.log('In GameCtrl : error ');
-          },
-        //Options
-        options);
-
-      return false;
+  $scope.init = function () {
+    $ionicSlideBoxDelegate.update();
+    $ionicLoading.show({template: 'Loading...'});
+    $scope.getSelfies();
   };
+
+  $scope.getSelfies = function() {
+    
+    console.log('TAG : ' + $stateParams.tag);
+    var tagg = $stateParams.tag;
+    InstaService.fetchSelfies(tagg, function(response){
+
+      var text;
+
+      for (var i = 0; i < response.length; i++) {
+        text = '';
+
+        if(response[i].caption){
+          text = response[i].caption.text;
+        }
+        $scope.selfies.push(
+          {
+            url :response[i].images.standard_resolution.url,
+            desc : text.trim().substring(0,100)
+          }
+        ); 
+      }
+
+      $ionicLoading.hide();
+
+    });
+    
+      
+  };
+
+  $scope.nextSlide = function() {
+    $ionicSlideBoxDelegate.next();
+  };
+  
+
 });
