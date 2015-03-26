@@ -8,8 +8,8 @@ app.factory("InstaService", function($http,$ionicLoading,$ionicPopup){
   return{
 
     fetchSelfies: function(callback) {
-      var url = "https://api.instagram.com/v1/tags/"+tag+"/media/recent?client_id="+clientid+"&callback=JSON_CALLBACK&COUNT="+count+"";
 
+      var url = "https://api.instagram.com/v1/tags/"+tag+"/media/recent?client_id="+clientid+"&callback=JSON_CALLBACK&COUNT="+count+"";
 
       if(navigator && navigator.connection && navigator.connection.type === 'none'){
         $ionicPopup.alert({
@@ -20,7 +20,6 @@ app.factory("InstaService", function($http,$ionicLoading,$ionicPopup){
       }
 
       $http.jsonp(url).success(function(response) {
-        $ionicLoading.hide();
         callback(response.data);
       });
     }

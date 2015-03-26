@@ -1,29 +1,48 @@
 
 var app= angular.module('starter');
 
-app.controller('InstaCtrl', function($scope, InstaService, FaceService, $interval, $ionicSlideBoxDelegate){
+app.controller('InstaCtrl', function($scope, $ionicLoading, InstaService, FaceService, $interval, $ionicSlideBoxDelegate){
+  
   $scope.imgcontain = 0;
   $scope.result = [];
   $scope.yolo = "Search Instagram Selfies";
+  $scope.selfies = [];
+  
 
   // Fix ionic slider with ng-repeat
-  setTimeout(function(){
+ setTimeout(function(){
       $ionicSlideBoxDelegate.update();
       console.log('setTimeout');
   },1000);
 
   $scope.init = function () {
-   $scope.getSelfies();
+    $ionicSlideBoxDelegate.update();
+    $ionicLoading.show({template: 'Loading...'});
+    $scope.getSelfies();
   };
 
   $scope.getSelfies = function() {
+    
     InstaService.fetchSelfies(function(response){
-      console.log('hello getSelfies');
-      $scope.imgcontain = 1;
-      $scope.img_url2 = response;
-      $scope.result = response;
+
+      for (var i = 0; i < response.length; i++) {
+        $scope.selfies.push(
+          {
+            img:response[i],
+            desc: '#selfie hello blablab blaba ) :-*'
+          }
+        ); 
+      }
+
+      $ionicLoading.hide();
 
     });
+    
+      
+  };
+
+  $scope.nextSlide = function() {
+    $ionicSlideBoxDelegate.next();
   };
 
 
@@ -35,6 +54,7 @@ app.controller('InstaCtrl', function($scope, InstaService, FaceService, $interva
     }
 
     var options =   
+
       {   quality: 50,
           destinationType: Camera.DestinationType.DATA_URL, // FILE_URI or DATA_URL
           sourceType: Camera.PictureSourceType.CAMERA, // 0:Photo Library, 1=Camera, 2=Saved Album
@@ -45,17 +65,15 @@ app.controller('InstaCtrl', function($scope, InstaService, FaceService, $interva
       navigator.camera.getPicture(
 
           function(imgData) {
-
-            // Get image URL
+            
              FaceService.getImgurUrl(imgData, function(res){
                
                 var imgUrl = res.data.link;
 
-                alert('In InstaCtrl : url = ' + imgUrl);
-
-                // Get Face infos
                 FaceService.getFaceInfos(imgUrl, function(face){
-                  console.log('glass ? ' + face.glass);
+                  
+                  // TODO
+
                 });
 
              });
