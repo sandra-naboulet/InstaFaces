@@ -12,7 +12,9 @@ var Face = function () {
     this.pitch;
     this.yaw;
     this.roll;
-  };
+    this.width;
+  }
+
   return Face;
 
 };
