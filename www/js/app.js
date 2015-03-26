@@ -50,6 +50,7 @@ app.config(function($routeProvider){
 var app = angular.module('starter', ['ionic'])
 
 app.config(function($stateProvider, $urlRouterProvider) {
+  
   $urlRouterProvider.otherwise('/')
 
   $stateProvider
@@ -58,14 +59,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: 'partials/menu.html',
   })
   .state('game', {
-    url: '/game',
+    url: '/game/:tag',
     templateUrl: 'partials/game.html',
-    controller: 'InstaCtrl'
+    controller: 'GameCtrl'
   })
   .state('result', {
     url: '/result',
     templateUrl: 'partials/result.html',
-    controller: 'GameCtrl'
+    controller: 'ResultCtrl'
   })
 })
 
