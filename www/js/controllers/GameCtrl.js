@@ -6,6 +6,16 @@ app.controller('GameCtrl', function($scope, InstaService, FaceService, $interval
 		alert('THIS IS BEFORE CAMERA');
 		$scope.openCamera();
 	};
+/*
+  $scope.shareSelfie = function (){
+    var insta = document.getElementById('ImageCapture');
+    var caption = "Hey @antonin_rvr, you've been selfimitated!!! "
+    $cordovaInstagram.share(insta, caption).then(function() {
+      console.log('GameCtrl, share on onstagram worked');
+  }, function(err) {
+      console.log('No share on instagram');
+  });
+  };*/
 
 
 	$scope.openCamera = function() {

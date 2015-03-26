@@ -39,7 +39,7 @@ app.factory("FaceService", function($http,$ionicLoading,$ionicPopup){
          method: 'POST',
          url: 'https://api.imgur.com/3/image',
          headers: {
-           'Authorization': 'Client-ID 4a54a06a9013a40'
+           'Authorization': 'Client-ID 5f6f9c592769656'
          },
          data: { 
             'image': imgData,
