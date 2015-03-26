@@ -44,47 +44,5 @@ app.controller('InstaCtrl', function($scope, $ionicLoading, InstaService, FaceSe
   $scope.nextSlide = function() {
     $ionicSlideBoxDelegate.next();
   };
-
-
-  $scope.openCamera = function() {
   
-    if (!navigator.camera) {
-        alert("Camera API not supported", "Error");
-        return;
-    }
-
-    var options =   
-
-      {   quality: 50,
-          destinationType: Camera.DestinationType.DATA_URL, // FILE_URI or DATA_URL
-          sourceType: Camera.PictureSourceType.CAMERA, // 0:Photo Library, 1=Camera, 2=Saved Album
-          cameraDirection: 1,
-          encodingType: 0     // 0=JPG 1=PNG
-      };
-
-      navigator.camera.getPicture(
-
-          function(imgData) {
-            
-             FaceService.getImgurUrl(imgData, function(res){
-               
-                var imgUrl = res.data.link;
-
-                FaceService.getFaceInfos(imgUrl, function(face){
-                  
-                  // TODO
-
-                });
-
-             });
-          },
-          function() {
-             console.log('In InstaCtrl : error ');
-          },
-        options);
-
-      return false;
-  };
-  
-
 });

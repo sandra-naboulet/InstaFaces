@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic', 'ngRoute']);
+var app = angular.module('starter', ['ionic', 'ngRoute', 'ngCordova']);
 
 app.run(function($ionicPlatform, $ionicPopup, $location) {
   $ionicPlatform.ready(function() {
@@ -15,20 +15,6 @@ app.run(function($ionicPlatform, $ionicPopup, $location) {
   if(window.StatusBar) {
     StatusBar.styleDefault();
   } 
-
-   $ionicPlatform.onHardwareBackButton(function() {
-     event.preventDefault();
-     event.stopPropagation();
-     alert('going back now yall');
-    });
-
-  if($location.$$path == "/menu"){
-      console.log('je peux cliquer pour sortir de l\'appli');
-    }
-else {
-      console.log('je peux revenir en arrière');
-  }
-  
 
   });
 })
@@ -76,6 +62,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: 'partials/game.html',
     controller: 'InstaCtrl'
   })
-
+  .state('result', {
+    url: '/result',
+    templateUrl: 'partials/result.html',
+    controller: 'GameCtrl'
+  })
 })
 
