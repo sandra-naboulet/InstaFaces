@@ -65,29 +65,26 @@ app.factory("FaceService", function($http,$ionicLoading,$ionicPopup){
         
         $ionicLoading.hide();
 
-        var face = new Face();
+         var faces = [];
 
-        if(res.face.length == 0){
-          console.log('No face found');
-          face.smiling = 0;
-          face.glass = 0;
-          face.yaw = 0;
-          face.roll = 0;
-          face.pitch = 0;
-        }
-        else {
-          var attr = res.face[0].attribute;
+        for (var i = 0; i < res.face.length; i++) {
+          
+          var face = new Face();
+          var attr = res.face[i].attribute;
+
           face.smiling = attr.smiling.value;
           face.glass = attr.glass.value;
           face.yaw = attr.pose.yaw_angle.value;
           face.roll = attr.pose.roll_angle.value;
           face.pitch = attr.pose.pitch_angle.value;
+        
+          faces.push(face);
         }
 
-        callback(face);
+        callback(faces);
         
       }).error(function(){
-        console.log('In FaceService : cannon get face infos');
+        console.log('In FaceService : cannot get face infos');
       });
     }
   };

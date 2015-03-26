@@ -2,7 +2,7 @@ var app= angular.module('starter');
 
 app.controller('ResultCtrl', function($scope, $ionicLoading, $rootScope, InstaService, FaceService, $stateParams){
 
-  $scope.resultValue = 0;
+  $scope.resultValue = '';
 
   $scope.init = function () {
 
@@ -172,13 +172,40 @@ app.controller('ResultCtrl', function($scope, $ionicLoading, $rootScope, InstaSe
 
           var imgUrl = res.data.link;
           
-          FaceService.getFaceInfos(imgUrl, function(myFace){
+          FaceService.getFaceInfos(imgUrl, function(myFaces){
 
               var instaImgUrl = $rootScope.selfies[$stateParams.id].url;
 
-              FaceService.getFaceInfos(instaImgUrl, function(instaFace){
+              FaceService.getFaceInfos(instaImgUrl, function(instaFaces){
+
                  
-                $scope.resultValue = compareFaces(myFace,instaFace);
+                 if(myFaces.length === 0 || instaFaces.length === 0){
+                    console.log('No face detected on at least one of the 2 pictures. Cant compare them.')
+                 } 
+                 else{
+
+                    var faces1 = [];
+                    var faces2 = [];
+                    var res;
+                    var results = [];
+
+                    if(myFaces.length < instaFaces.length){
+                        faces1 = myFaces;
+                        faces2 = instaFaces;
+                    }
+                    else{
+                        faces1 = instaFaces;
+                        faces2 = myFaces;
+                    }
+
+                    for (var i = 0; i < faces1.length; i++) {
+                        res = compareFaces(faces1[i], faces2[i]);
+                        results.push(res);
+                    }
+
+                 }
+                 // TODO Update scope. les resultats sont dans results[]
+               
                 $ionicLoading.hide();
 
               });
