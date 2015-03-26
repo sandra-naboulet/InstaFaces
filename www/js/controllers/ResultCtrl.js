@@ -1,66 +1,80 @@
 var app= angular.module('starter');
 
-app.controller('ResultCtrl', function($scope, InstaService, FaceService){
+app.controller('ResultCtrl', function($scope, $ionicLoading, $rootScope, InstaService, FaceService, $stateParams){
 
+  $scope.resultValue = 0;
 
   $scope.init = function () {
-    alert('THIS IS BEFORE CAMERA');
+
+    // Camera
     $scope.openCamera();
+
+    // Draw insta pic
+    var canvas = document.getElementById('insta');
+    var ctx = canvas.getContext('2d');
+    var sendselfie = new Image();
+    sendselfie.src = $rootScope.selfies[$stateParams.id].url; 
+    ctx.drawImage(sendselfie, 0, 0);
+
   };
 
+  function compareFaces(face1,face2){
+    return 42;
+  };
 
-$scope.openCamera = function() {
+  $scope.openCamera = function() {
 
-  if (!navigator.camera) {
-    alert("Camera API not supported", "Error");
-    return;
-  }
+    if (!navigator.camera) {
+      alert("Camera API not supported", "Error");
+      return;
+    }
 
-  var options =   
-      {   quality: 50,
-          destinationType: Camera.DestinationType.DATA_URL, // FILE_URI or DATA_URL
-          sourceType: Camera.PictureSourceType.CAMERA, // 0:Photo Library, 1=Camera, 2=Saved Album
-          encodingType: Camera.EncodingType.JPEG,
-          targetWidth: 720, 
-          cameraDirection: 1,
-          encodingType: 0     // 0=JPG 1=PNG
-        };
+    var options =   
+                  {   quality: 50,
+                      destinationType: Camera.DestinationType.DATA_URL, // FILE_URI or DATA_URL
+                      sourceType: Camera.PictureSourceType.CAMERA, // 0:Photo Library, 1=Camera, 2=Saved Album
+                      encodingType: Camera.EncodingType.JPEG,
+                      targetWidth: 720, 
+                      cameraDirection: 1,
+                      encodingType: 0     // 0=JPG 1=PNG
+                  };
 
-        navigator.camera.getPicture(
-          //Succes
-          function(imgData) {
-            var theImage = document.getElementById('ImageCapture');
-            theImage.style.display = 'block';
-            theImage.src = "data:image/jpeg;base64," + imgData;
-            console.log(theImage.src);
-                // Put image in canvas
-                var canvas = document.getElementById('insta');
-                var ctx = canvas.getContext('2d');
-                var sendselfie = new Image();
-                sendselfie.src = theImage.src; 
-                ctx.drawImage(sendselfie, 0, 0);
+    navigator.camera.getPicture(
+         
+      function(imgData) {
 
-            // Get image URL
-            FaceService.getImgurUrl(imgData, function(res){
+        $ionicLoading.show({template: 'Comparison ...'});
 
-              var imgUrl = res.data.link;
+        var theImage = document.getElementById('ImageCapture');
+        theImage.style.display = 'block';
+        theImage.src = "data:image/jpeg;base64," + imgData;
 
-              alert('In GameCtrl : url = ' + imgUrl);
+        FaceService.getImgurUrl(imgData, function(res){
 
-                    // Get Face infos
-                    FaceService.getFaceInfos(imgUrl, function(face){
-                      console.log('glass ? ' + face.glass);
-                    });
+          var imgUrl = res.data.link;
+          
+          FaceService.getFaceInfos(imgUrl, function(myFace){
 
-                  });
-          },
-          //Error
-          function() {
-            console.log('In GameCtrl : error ');
-          },
-        //Options
-        options);
+              var instaImgUrl = $rootScope.selfies[$stateParams.id].url;
 
-return false;
-};
+              FaceService.getFaceInfos(instaImgUrl, function(instaFace){
+                 
+                $scope.resultValue = compareFaces(myFace,instaFace);
+                $ionicLoading.hide();
+                
+              });
+          });
+
+        });
+
+      },
+      //Error
+      function() {
+        console.log('In GameCtrl : error ');
+      },
+      //Options
+      options);
+
+    return false;
+  };
 });

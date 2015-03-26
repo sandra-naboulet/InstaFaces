@@ -1,19 +1,12 @@
-var app= angular.module('starter');
+var app = angular.module('starter');
 
-app.controller('GameCtrl', function($scope, $ionicLoading, InstaService, FaceService, $interval, $ionicSlideBoxDelegate, $stateParams){
-
-// $scope.tag = $routeParams.tag;
-
- $scope.imgcontain = 0;
-  $scope.result = [];
-  $scope.yolo = "Search Instagram Selfies";
-  $scope.selfies = [];
+app.controller('GameCtrl', function($scope, $location, $rootScope, $ionicLoading, InstaService, FaceService, $interval, $ionicSlideBoxDelegate, $stateParams){
   
-
+  $rootScope.selfies = [];
+  
   // Fix ionic slider with ng-repeat
  setTimeout(function(){
       $ionicSlideBoxDelegate.update();
-      console.log('setTimeout');
   },1000);
 
   $scope.init = function () {
@@ -24,9 +17,9 @@ app.controller('GameCtrl', function($scope, $ionicLoading, InstaService, FaceSer
 
   $scope.getSelfies = function() {
     
-    console.log('TAG : ' + $stateParams.tag);
-    var tagg = $stateParams.tag;
-    InstaService.fetchSelfies(tagg, function(response){
+    var tag = $stateParams.tag;
+
+    InstaService.fetchSelfies(tag, function(response){
 
       var text;
 
@@ -36,7 +29,8 @@ app.controller('GameCtrl', function($scope, $ionicLoading, InstaService, FaceSer
         if(response[i].caption){
           text = response[i].caption.text;
         }
-        $scope.selfies.push(
+
+        $rootScope.selfies.push(
           {
             url :response[i].images.standard_resolution.url,
             desc : text.trim().substring(0,100)
@@ -47,8 +41,12 @@ app.controller('GameCtrl', function($scope, $ionicLoading, InstaService, FaceSer
       $ionicLoading.hide();
 
     });
-    
-      
+
+  };
+  
+
+  $scope.takeSelfie = function() {
+    $location.path('/result/' +  $ionicSlideBoxDelegate.currentIndex());
   };
 
   $scope.nextSlide = function() {

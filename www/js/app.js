@@ -36,7 +36,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     controller: 'GameCtrl'
   })
   .state('result', {
-    url: '/result',
+    url: '/result/{id:int}',
     templateUrl: 'partials/result.html',
     controller: 'ResultCtrl'
   })

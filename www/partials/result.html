@@ -1,13 +1,15 @@
 <script src="js/vanilla.js"></script>
 
-<ion-pane>
-  <ion-content>
+<ion-pane >
+  <ion-content style="padding:10px;background-color:white">
 	  <section data-ng-init="init()">
-		  <p> Page résultats</p>
-		  <canvas id="insta" width="300" height="300" onclick="app2.share();"></canvas>
-		  <img style="display:none; width:100%;" id="ImageCapture" src="" onclick="app2.share();"/>
+		  <canvas id="insta" width="100" height="100" onclick="app2.share();" style="border:1px solid green;position:absolute;margin:5px"></canvas>
+		  <img style="display:none; width:100%;" id="ImageCapture" src="" onclick="app2.share();" style="position:absolute"/>
+		 
 		  <p onclick="app2.yolo();">Click pic to share on instagram</p>
 		  <p onclick="app2.verify();">IS INSTAGRAM HERE?</p>
+		  result : {{ resultValue + '%'}}
 	  </section>
   </ion-content>
 </ion-pane>
+

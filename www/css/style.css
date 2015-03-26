@@ -72,9 +72,11 @@
 
  /* -------- Result -------- */
 
- .result{
- 	padding:15px;
- }
-
+.result {
+    
+    color: green;
+    font-size: 40px;
+  
+}
 
 

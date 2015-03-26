@@ -12,21 +12,10 @@ var Face = function () {
     this.pitch;
     this.yaw;
     this.roll;
-  }
- 
-  Face.prototype.compareWith = function (anotherFace) {
-    return 42;
   };
-
-  Face.prototype.toString = function faceToString() {
-    var str = 'Face = { smiling : ' + this.smiling + ' glass :' + this.glass + ' pitch :' + this.pitch + ' yaw : ' + this.yaw + ' roll : '+ this.roll + '}';
-    return str;
-  };
-
   return Face;
 
 };
-
 
 app.factory("FaceService", function($http,$ionicLoading,$ionicPopup){
 
@@ -35,30 +24,28 @@ app.factory("FaceService", function($http,$ionicLoading,$ionicPopup){
   return {
 
     getImgurUrl : function(imgData, callback){
-      var req = {
-         method: 'POST',
-         url: 'https://api.imgur.com/3/image',
-         headers: {
-           'Authorization': 'Client-ID 5f6f9c592769656'
-         },
-         data: { 
-            'image': imgData,
-            'type': 'base64'
-          }
-
+      
+      var req = 
+      {
+        method: 'POST',
+        url: 'https://api.imgur.com/3/image',
+        headers: {
+          'Authorization': 'Client-ID 5f6f9c592769656'
+        },
+        data: { 
+          'image': imgData,
+          'type': 'base64'
         }
+      };
 
-        $http(req)
-        .success(function(res){
-            console.log('In FaceService : success');
-            callback(res)
-        })
-        .error(function(){
-            console.log('In FaceService : error');
-        });
+      $http(req)
+      .success(function(res){
+          callback(res)
+      })
+      .error(function(){
+          console.log('In FaceService : error');
+      });
     },
-
-
 
     getFaceInfos : function(imgUrl, callback){
 
@@ -71,32 +58,35 @@ app.factory("FaceService", function($http,$ionicLoading,$ionicPopup){
       }
   
       var url = API_URL + "detection/detect?callback=JSON_CALLBACK&output=jsonp&url=" + encodeURIComponent(imgUrl) + "&api_secret=" + API_SECRET + "&api_key=" + API_KEY + "&attribute=" + attributes;
-      console.log('url = ' + url);
+  
       $http.jsonp(url).success(function(res){
-
+        
         $ionicLoading.hide();
 
+        var face = new Face();
+
         if(res.face.length == 0){
-           console.log('No face in the pic');
+          console.log('No face found');
+          face.smiling = 0;
+          face.glass = 0;
+          face.yaw = 0;
+          face.roll = 0;
+          face.pitch = 0;
         }
         else {
           var attr = res.face[0].attribute;
-          var face = new Face();
           face.smiling = attr.smiling.value;
           face.glass = attr.glass.value;
           face.yaw = attr.pose.yaw_angle.value;
           face.roll = attr.pose.roll_angle.value;
           face.pitch = attr.pose.pitch_angle.value;
-          
-          callback(face);
         }
-        
 
+        callback(face);
+        
       }).error(function(){
-        console.log('Cant send the picture');
+        console.log('In FaceService : cannon get face infos');
       });
     }
   };
-
-
 });
