@@ -3,7 +3,7 @@
 
     <section  data-ng-init="init()">
      
-      <div class="slide-box" style="height:400px" >
+      <div class="slide-box">
         <ion-slide-box on-slide-changed="onSlideChanged(index)" >
           <ion-slide ng-repeat="selfie in selfies" >
             <img ng-src="{{selfie.url}}"  style="width:100%;margin-bottom:15px"/>
@@ -21,7 +21,7 @@
               </button>
           </div>
           <div class="col col-50">
-              <button class="button icon-left ion-camera button-full button-positive" ng-click="takeSelfie()">
+              <button class="button icon-left ion-camera button-full button-balanced" ng-click="takeSelfie()">
                  Take Selfie
               </button>
           </div>

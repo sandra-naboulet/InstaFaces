@@ -1,15 +1,18 @@
+<!-- Encore une fois, l'utilisation de vanilla.js n'est pas très propre mais elle est nécessaire pour faire marcher le plugin cordova instagram, dont les bugs du support via ng-cordova (de la team ionic) n'ont pas encore l'air fixés. La prise en compte de ng-cordova a à peine 3 jours au moment de la rédaction de ce code -->
 <script src="js/vanilla.js"></script>
-
-<ion-pane >
-  <ion-content style="padding:10px;background-color:white">
-	  <section data-ng-init="init()">
-		  <canvas id="insta" width="100" height="100" onclick="app2.share();" style="border:1px solid green;position:absolute;margin:5px"></canvas>
-		  <img style="display:none; width:100%;" id="ImageCapture" src="" onclick="app2.share();" style="position:absolute"/>
-		 
-		  <p onclick="app2.yolo();">Click pic to share on instagram</p>
-		  <p onclick="app2.verify();">IS INSTAGRAM HERE?</p>
-		  result : {{ resultValue + '%'}}
-	  </section>
-  </ion-content>
-</ion-pane>
-
+<div  id="result" data-ng-init="init()">
+	<div id="top">
+		<canvas id="insta" ng-click="share()" style="border:1px solid green;position:absolute;margin:5px"></canvas>
+		  <img style="display:none; width:100%;" id="ImageCapture" src="" style="position:absolute"/>
+	</div>
+	<span class="score">{{ resultValue + '%'}}</span>
+	<div id="bot">
+		<p>Bravo !!</p>
+		<p ng-click="share()">Cliquez ici ou sur la photo <br/>pour la partager avec le premier selfie</p>
+		<a href="#/" class="button-full">refaites une partie</a>
+	</div>
+</div>
+<script>
+		  	var theusername = document.getElementById("theUsernameValue").value;
+		  	var theresultvalue = document.getElementById("theResultValue").value;
+		  </script>

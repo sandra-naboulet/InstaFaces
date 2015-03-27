@@ -2,22 +2,18 @@ var app= angular.module('starter');
 
 app.controller('ResultCtrl', function($scope, $ionicLoading, $rootScope, InstaService, FaceService, $stateParams){
 
-  $scope.resultValue = '';
+  $scope.resultValue = '87.5';
+  $scope.username = $rootScope.selfies[$stateParams.id].username;
 
+  // Passer des paramètres du scope dans notre fonction native
+  // pour plugin instagram
+  $scope.share = function() {
+    app2.share($scope.resultValue, $scope.username);
+  }
   $scope.init = function () {
 
     // Camera
     $scope.openCamera();
-
-    // Draw insta pic
-    var canvas = document.getElementById('insta');
-    var ctx = canvas.getContext('2d');
-    var instaImg = new Image();
-    instaImg.width = 100;
-    instaImg.height = 100;
-    instaImg.src = $rootScope.selfies[$stateParams.id].url; 
-
-    ctx.drawImage(instaImg, 0, 0,instaImg.width,instaImg.height);
 
   };
 
@@ -161,12 +157,31 @@ app.controller('ResultCtrl', function($scope, $ionicLoading, $rootScope, InstaSe
     navigator.camera.getPicture(
          
       function(imgData) {
+                var theImage = document.getElementById('ImageCapture');
+                theImage.src = "data:image/jpeg;base64," + imgData;
+                var theWidth = $('#ImageCapture').width();
+                var theHeight = $('#ImageCapture').height();
+                // Put image in canvas
+                var canvas = document.getElementById('insta');
+                var ctx = canvas.getContext('2d');
+                canvas.width = theWidth;
+                canvas.height = theHeight;
 
-        $ionicLoading.show({template: 'Comparison ...'});
+                // Draw our selfie
+                var sendselfie = new Image();
+                sendselfie.width = theWidth*2;
+                sendselfie.height = theHeight*2;
+                sendselfie.src = theImage.src; 
+                ctx.drawImage(sendselfie, 0, 0, theWidth, theHeight);
 
-        var theImage = document.getElementById('ImageCapture');
-        theImage.style.display = 'block';
-        theImage.src = "data:image/jpeg;base64," + imgData;
+                // Draw insta pic
+                var instaImg = new Image();
+                instaImg.width = 120;
+                instaImg.height = 120;
+                instaImg.src = $rootScope.selfies[$stateParams.id].url; 
+                ctx.drawImage(instaImg, 12, 12,(instaImg.width/2),(instaImg.height/2));
+
+
 
         FaceService.getImgurUrl(imgData, function(res){
 

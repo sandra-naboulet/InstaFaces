@@ -4,10 +4,7 @@ app.controller('GameCtrl', function($scope, $location, $rootScope, $ionicLoading
   
   $rootScope.selfies = [];
   
-  // Fix ionic slider with ng-repeat
- setTimeout(function(){
-      $ionicSlideBoxDelegate.update();
-  },1000);
+ 
 
   $scope.init = function () {
     $ionicSlideBoxDelegate.update();
@@ -33,12 +30,15 @@ app.controller('GameCtrl', function($scope, $location, $rootScope, $ionicLoading
         $rootScope.selfies.push(
           {
             url :response[i].images.standard_resolution.url,
+            username : response[i].user.username,
             desc : text.trim().substring(0,100)
           }
         ); 
       }
-
+      // Fix ionic slider with ng-repeat
+      $ionicSlideBoxDelegate.update();
       $ionicLoading.hide();
+      
 
     });
 
@@ -52,6 +52,8 @@ app.controller('GameCtrl', function($scope, $location, $rootScope, $ionicLoading
   $scope.nextSlide = function() {
     $ionicSlideBoxDelegate.next();
   };
-  
+  $scope.previousSlide = function() {
+    $ionicSlideBoxDelegate.previous();
+  };
 
 });
