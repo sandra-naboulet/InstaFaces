@@ -5,11 +5,16 @@
 		<canvas id="insta" ng-click="share()" style="border:1px solid green;position:absolute;margin:5px"></canvas>
 		  <img style="display:none; width:100%;" id="ImageCapture" src="" style="position:absolute"/>
 	</div>
-	<span class="score">{{ resultValue + '%'}}</span>
+	<br />
+	<br />
+	<br />
+
 	<div id="bot">
-		<p>Bravo !!</p>
-		<p ng-click="share()">Cliquez ici ou sur la photo <br/>pour la partager avec le premier selfie</p>
-		<a href="#/" class="button-full">refaites une partie</a>
+		<span class="score">{{ resultValue }}</span>
+		<br />
+		<br />
+		<p ng-click="share()">Click to share<br/></p>
+		<a href="#/" style="width:300px;margin:0 auto" class="button icon-left ion-camera button-full button-balanced">Play again</a>
 	</div>
 </div>
 <script>

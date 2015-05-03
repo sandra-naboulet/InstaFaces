@@ -2,7 +2,7 @@ var app= angular.module('starter');
 
 app.controller('ResultCtrl', function($scope, $ionicLoading, $rootScope, InstaService, FaceService, $stateParams){
 
-  $scope.resultValue = '87.5';
+  $scope.resultValue = '';
   $scope.username = $rootScope.selfies[$stateParams.id].username;
 
   // Passer des paramètres du scope dans notre fonction native
@@ -11,7 +11,7 @@ app.controller('ResultCtrl', function($scope, $ionicLoading, $rootScope, InstaSe
     app2.share($scope.resultValue, $scope.username);
   }
   $scope.init = function () {
-
+    //$ionicLoading.show('Process ...');
     // Camera
     $scope.openCamera();
 
@@ -158,29 +158,28 @@ app.controller('ResultCtrl', function($scope, $ionicLoading, $rootScope, InstaSe
          
       function(imgData) {
                 var theImage = document.getElementById('ImageCapture');
-                theImage.src = "data:image/jpeg;base64," + imgData;
-                var theWidth = $('#ImageCapture').width();
-                var theHeight = $('#ImageCapture').height();
-                // Put image in canvas
-                var canvas = document.getElementById('insta');
-                var ctx = canvas.getContext('2d');
-                canvas.width = theWidth;
-                canvas.height = theHeight;
+               theImage.src = "data:image/jpeg;base64," + imgData;
+               var theWidth = $('#ImageCapture').width();
+               var theHeight = $('#ImageCapture').height();
+               // Put image in canvas
+               var canvas = document.getElementById('insta');
+               var ctx = canvas.getContext('2d');
+               canvas.width = theWidth/2;
+               canvas.height = theHeight/3;
 
-                // Draw our selfie
-                var sendselfie = new Image();
-                sendselfie.width = theWidth*2;
-                sendselfie.height = theHeight*2;
-                sendselfie.src = theImage.src; 
-                ctx.drawImage(sendselfie, 0, 0, theWidth, theHeight);
+               // Draw our selfie
+               var sendselfie = new Image();
+               sendselfie.width = theWidth;
+               sendselfie.height = theHeight;
+               sendselfie.src = theImage.src; 
+               ctx.drawImage(sendselfie, 0, 0, theWidth/2, theHeight/2);
 
-                // Draw insta pic
-                var instaImg = new Image();
-                instaImg.width = 120;
-                instaImg.height = 120;
-                instaImg.src = $rootScope.selfies[$stateParams.id].url; 
-                ctx.drawImage(instaImg, 12, 12,(instaImg.width/2),(instaImg.height/2));
-
+               // Draw insta pic
+               var instaImg = new Image();
+               instaImg.width = 120;
+               instaImg.height = 120;
+               instaImg.src = $rootScope.selfies[$stateParams.id].url; 
+               ctx.drawImage(instaImg, 12, 12,(instaImg.width/2),(instaImg.height/2));
 
 
         FaceService.getImgurUrl(imgData, function(res){
@@ -195,7 +194,8 @@ app.controller('ResultCtrl', function($scope, $ionicLoading, $rootScope, InstaSe
 
                  
                  if(myFaces.length === 0 || instaFaces.length === 0){
-                    console.log('No face detected on at least one of the 2 pictures. Cant compare them.')
+                    console.log('No face detected on at least one of the 2 pictures. Cant compare them.');
+                    alert('No face detected on at least one of the 2 pictures. Cant compare them. Retry.');
                  } 
                  else{
 
@@ -218,8 +218,14 @@ app.controller('ResultCtrl', function($scope, $ionicLoading, $rootScope, InstaSe
                         results.push(res);
                     }
 
+
                  }
                  // TODO Update scope. les resultats sont dans results[]
+                console.log('faces1 ' + myFaces.length + ' faces2' + instaFaces.length);
+
+                for (var i = 0; i < results.length; i++) {
+                    $scope.resultValue += results[i] + '% ';
+                }
                
                 $ionicLoading.hide();
 

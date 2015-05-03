@@ -2,7 +2,8 @@ var app= angular.module('starter');
 
 app.factory("InstaService", function($http,$ionicLoading,$ionicPopup){ 
 
-  var clientid = "c8e20f20055a4a76872b95dc5a15ff8b";
+ // var clientid = "c8e20f20055a4a76872b95dc5a15ff8b";
+ var clientid = "2e5abd064927444aa13fc2c5d27ef800";
   var count = 10;
 
   return {
